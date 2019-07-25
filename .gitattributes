@@ -1,1 +1,1 @@
-/include linguist-detectable=false
+include/mxnet/*.h linguist-detectable=false
