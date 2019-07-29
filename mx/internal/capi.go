@@ -1,8 +1,8 @@
 package internal
 
 /*
-#cgo CFLAGS: -I${SRCDIR}/../../include
-#cgo LDFLAGS: -L/opt/mxnet/lib -L${SRCDIR}/../../lib -lmxnet -Wl,-rpath=/opt/mxnet/lib -Wl,-rpath=${SRCDIR}/../../lib
+#cgo CFLAGS: -I/opt/mxnet/include
+#cgo LDFLAGS: -L/opt/mxnet/lib -lmxnet -Wl,-rpath=/opt/mxnet/lib
 #include <mxnet/c_api.h>
 
 static int imperative_invoke_out1(AtomicSymbolCreator ent, NDArrayHandle out, int ano, const char **keys, const char **vals) {

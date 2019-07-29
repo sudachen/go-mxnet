@@ -34,13 +34,19 @@ func Array(tp Dtype, d Dimension) *NDArray {
 	return Cpu().Array(tp, d)
 }
 
+func Errayf(s string,a... interface{}) *NDArray {
+	return &NDArray{
+		err: fmt.Errorf(s,a...),
+	}
+}
+
 func (c Context) Array(tp Dtype, d Dimension) *NDArray {
 	if !d.Good() {
-		return &NDArray{err: fmt.Errorf("failed to create array %v%v: bad dimension", tp.String(), d.String())}
+		return Errayf("failed to create array %v%v: bad dimension", tp.String(), d.String())
 	}
 	a := &NDArray{ctx: c, dim: d, dtype: tp}
 	if h,e := internal.NewNDArrayHandle(c.DevType(), c.DevNo(), int(tp), d.Shape, d.Len); e != 0 {
-		return &NDArray{err: fmt.Errorf("failed to create array %v%v: api error", tp.String(), d.String())}
+		return Errayf("failed to create array %v%v: api error", tp.String(), d.String())
 	} else {
 		a.handle = h
 		runtime.SetFinalizer(a, release)
