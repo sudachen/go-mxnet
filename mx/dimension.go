@@ -10,19 +10,23 @@ const (
 	DimDepth = 2
 )
 
+// do not change this constant
+// code can assume exactly this value
+const MaxDimensionCount = 4
+
 type Dimension struct {
-	Shape [3]int
+	Shape [MaxDimensionCount]int
 	Len   int
 }
 
 func (dim Dimension) String() string {
-	s := "(%d,%d,%d"[0:(3+(dim.Len-1)*3)] + ")"
-	q := ([]interface{}{dim.Shape[0], dim.Shape[1], dim.Shape[2]})[:dim.Len]
+	s := "(%d,%d,%d,%d"[0:(3+(dim.Len-1)*3)] + ")"
+	q := ([]interface{}{dim.Shape[0], dim.Shape[1], dim.Shape[2], dim.Shape[3]})[:dim.Len]
 	return fmt.Sprintf(s, q...)
 }
 
 func (dim Dimension) Good() bool {
-	if dim.Len <= 0 || dim.Len > 3 {
+	if dim.Len <= 0 || dim.Len > MaxDimensionCount {
 		return false
 	}
 	for _, v := range dim.Shape[:dim.Len] {
@@ -43,7 +47,7 @@ func (dim Dimension) SizeOf(dt Dtype) int {
 
 func Dim(a ...int) Dimension {
 	var dim Dimension
-	if q := len(a); q > 0 && q <= 3 {
+	if q := len(a); q > 0 && q <= MaxDimensionCount {
 		dim.Len = q
 		for i, v := range a {
 			dim.Shape[i] = v

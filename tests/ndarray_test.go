@@ -45,7 +45,7 @@ func Test_Array5(t *testing.T) {
 	assert.ErrorContains(t, a.Err(), "bad dimension")
 	a = mx.Array(mx.Int64, mx.Dim(-1, 3))
 	assert.ErrorContains(t, a.Err(), "bad dimension")
-	a = mx.Array(mx.Int64, mx.Dim(1, 3, 10, 100))
+	a = mx.Array(mx.Int64, mx.Dim(1, 3, 10, 100, 2))
 	assert.ErrorContains(t, a.Err(), "bad dimension")
 }
 

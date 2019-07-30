@@ -123,9 +123,9 @@ func ImperativeInvokeInplace1(op MxnetOp, h NDArrayHandle, a... interface{}) err
 }
 */
 
-func NewNDArrayHandle(devType int, devNo int, dtype int, shape [3]int, slen int) (NDArrayHandle, int) {
+func NewNDArrayHandle(devType int, devNo int, dtype int, shape [4]int, slen int) (NDArrayHandle, int) {
 	var a C.NDArrayHandle
-	s := [3]C.uint{C.uint(shape[0]), C.uint(shape[1]), C.uint(shape[2])}
+	s := [4]C.uint{C.uint(shape[0]), C.uint(shape[1]), C.uint(shape[2]), C.uint(shape[3])}
 	e := C.MXNDArrayCreateEx(&s[0], C.uint(slen), C.int(devType), C.int(devNo), 0, C.int(dtype), &a)
 	return NDArrayHandle(a), int(e)
 }
