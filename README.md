@@ -1,0 +1,1 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/99026473d5905020813a/maintainability)](https://codeclimate.com/github/sudachen/go-mxnet/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/99026473d5905020813a/test_coverage)](https://codeclimate.com/github/sudachen/go-mxnet/test_coverage)
