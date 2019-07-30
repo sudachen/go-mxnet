@@ -10,10 +10,11 @@ jobs: # basic units of work in a run
     environment: # environment variables for the build itself
       OMP_NUM_THREADS: 6
       MXNET_CPU_WORKER_NTHREADS: 2
+      CC_TEST_REPORTER_ID: 8d2e3df7f0a2808d79cd3b91bb236f8180af441d4244c9cca091b2307931580e
 
     steps: # steps that comprise the `build` job
       - checkout # check out source code to working directory
-      - run: mkdir -p /tmp/artifacts # create the test results directory
+      - run: mkdir -p .tmp/artifacts # create the test results directory
 
       - restore_cache: # restores saved cache if no changes are detected since last run
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
