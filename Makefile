@@ -10,6 +10,6 @@ build:
 
 run-tests:
 	mkdir -p .tmp
-	cd tests && go test -coverprofile=.tmp/c.out -coverpkg=$(COVERPKGS)
+	cd tests && go test -coverprofile=../.tmp/c.out -coverpkg=$(COVERPKGS)
 	go tool cover -html=.tmp/c.out -o .tmp/coverage.html
 
