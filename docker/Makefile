@@ -10,5 +10,3 @@ ALL = mxnet mxgo12 circleci
 build: $(foreach i,$(ALL),$(basename $(i)).Build)
 push: $(foreach i,$(ALL),$(basename $(i)).Push)
 
-
-

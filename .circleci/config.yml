@@ -24,7 +24,9 @@ jobs: # basic units of work in a run
 
       - run: make run-tests
 
-      - run: /usr/local/bin/cc-test-reporter after-build
+      - run: mkdir -p github.com/sudachen && \
+             ln -s $(pwd) github.com/sudachen/go-mxnet && \
+             /usr/local/bin/cc-test-reporter after-build
 
       - save_cache: # Store cache in the /go/pkg directory
           key: v1-pkg-cache
