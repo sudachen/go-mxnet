@@ -22,10 +22,9 @@ jobs: # basic units of work in a run
 
       - run: make build
 
-      - run:
-        command: |
-          make run-tests
-          ./cc-test-reporter after-build --exit-code $?
+      - run: make run-tests
+
+      - run: /usr/local/bin/cc-test-reporter after-build
 
       - save_cache: # Store cache in the /go/pkg directory
           key: v1-pkg-cache
