@@ -5,7 +5,7 @@
 %.Push : %.Build
 	docker push sudachen/$(basename $@)
 
-ALL = mxnet mxgo12 circleci
+ALL = mxnet go-mxnet-ci
 
 build: $(foreach i,$(ALL),$(basename $(i)).Build)
 push: $(foreach i,$(ALL),$(basename $(i)).Push)
