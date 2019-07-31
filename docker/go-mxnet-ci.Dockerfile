@@ -1,8 +1,7 @@
-FROM sudachen/mxgo12:latest
+FROM sudachen/go1127:latest
 LABEL maintainer="Alexey Sudachen <alexey@sudachen.name>"
 
 USER root
-
 RUN set -ex \
 && apt-get update --fix-missing \
  && apt-get install -qy --no-install-recommends \
@@ -29,11 +28,14 @@ RUN set -ex \
  && docker-compose version \
  && DOCKERIZE_URL="https://circle-downloads.s3.amazonaws.com/circleci-images/cache/linux-amd64/dockerize-latest.tar.gz" \
  && curl --silent --show-error --location --fail --retry 3 $DOCKERIZE_URL | tar -C /usr/local/bin -xzv  \
- && dockerize --version
-
-# && groupadd --gid 3434 circleci \
-# && useradd --uid 3434 --gid circleci --shell /bin/bash --create-home circleci \
-# BEGIN IMAGE CUSTOMIZATIONS
+ && dockerize --version \
+ && curl -L https://github.com/sudachen/mxnet/releases/download/1.5.0-mkldnn-static/libmxnet_cpu.7z -o /tmp/mxnet.7z \
+ && 7z x /tmp/mxnet.7z -o/ \
+ && rm /tmp/mxnet.7z \
+ && chmod +r -R /opt/mxnet \
+ && chmod +x $(find /opt/mxnet -type d) \
+ && chmod +x $(find /opt/mxnet/lib -type f) \
+ && ln -sf libmxnet_cpu.so /opt/mxnet/lib/libmxnet.so
 
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | INSTALL_DIRECTORY=/usr/local/bin sh
 RUN curl -sSL https://github.com/gotestyourself/gotestsum/releases/download/v0.3.4/gotestsum_0.3.4_linux_amd64.tar.gz | \
@@ -41,8 +43,6 @@ RUN curl -sSL https://github.com/gotestyourself/gotestsum/releases/download/v0.3
 
 RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter && \
     chmod +x /usr/local/bin/cc-test-reporter
-# END IMAGE CUSTOMIZATIONS
 
-#USER circleci
 USER $USER
 CMD ["/bin/sh"]
