@@ -9,7 +9,5 @@ build:
 	cd mx; go build
 
 run-tests:
-	mkdir -p .tmp/artifacts
 	cd tests && go test -coverprofile=../c.out -coverpkg=$(COVERPKGS)
-	#go tool cover -html=.tmp/c.out -o .tmp/artifacts/coverage.html
 
