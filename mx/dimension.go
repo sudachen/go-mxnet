@@ -5,9 +5,9 @@ import (
 )
 
 const (
-	DimRow = 0
+	DimRow    = 0
 	DimColumn = 1
-	DimDepth = 2
+	DimDepth  = 2
 )
 
 // do not change this constant
@@ -39,7 +39,7 @@ func (dim Dimension) Good() bool {
 
 func (dim Dimension) SizeOf(dt Dtype) int {
 	r := dt.Size()
-	for i:=0; i<dim.Len; i++ {
+	for i := 0; i < dim.Len; i++ {
 		r *= dim.Shape[i]
 	}
 	return r
@@ -55,4 +55,3 @@ func Dim(a ...int) Dimension {
 	}
 	return dim
 }
-

@@ -50,7 +50,7 @@ func Test_Array5(t *testing.T) {
 }
 
 func Test_Random_Uniform(t *testing.T) {
-	a := mx.Array(mx.Float32, mx.Dim(1, 3)).Uniform(0,1)
+	a := mx.Array(mx.Float32, mx.Dim(1, 3)).Uniform(0, 1)
 	assert.NilError(t, a.Err())
 	fmt.Println(a)
 }

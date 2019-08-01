@@ -1,6 +1,7 @@
 package internal
 
 type MxnetKey int
+
 const (
 	KeyEmpty MxnetKey = iota
 	KeyLow
@@ -10,13 +11,16 @@ const (
 
 func (k MxnetKey) Value() string {
 	switch k {
-	case KeyLow: return "low"
-	case KeyHigh: return "high"
+	case KeyLow:
+		return "low"
+	case KeyHigh:
+		return "high"
 	}
 	panic("mxnet parameters key out of range")
 }
 
 type MxnetOp int
+
 const (
 	OpEmpty MxnetOp = iota
 	OpRandomUniform
@@ -25,7 +29,8 @@ const (
 
 func (o MxnetOp) Value() string {
 	switch o {
-	case OpRandomUniform: return "_random_uniform"
+	case OpRandomUniform:
+		return "_random_uniform"
 	}
 	panic("mxnet operation out of range")
 }

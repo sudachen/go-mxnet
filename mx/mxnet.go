@@ -1,4 +1,5 @@
 package mx
+
 import (
 	"github.com/sudachen/go-mxnet/mx/internal"
 )
@@ -16,7 +17,7 @@ func Cpu() Context {
 }
 
 func Gpu(devNo int) Context {
-	return Context(2+devNo*1000)
+	return Context(2 + devNo*1000)
 }
 
 func (c Context) Int() int {
@@ -24,10 +25,9 @@ func (c Context) Int() int {
 }
 
 func (c Context) DevType() int {
-	return c.Int()%1000
+	return c.Int() % 1000
 }
 
 func (c Context) DevNo() int {
-	return c.Int()/1000
+	return c.Int() / 1000
 }
-
