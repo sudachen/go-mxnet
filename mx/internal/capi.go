@@ -26,43 +26,43 @@ var mxentry [OpNoOp]C.AtomicSymbolCreator
 
 type NDArrayHandle C.NDArrayHandle
 
-
 func init() {
 
 	var c C.int
 	C.MXGetGPUCount(&c)
 	GpuCount = int(c)
 
-	for i:=KeyEmpty+1; i<KeyNoKey; i++ {
+	for i := KeyEmpty + 1; i < KeyNoKey; i++ {
 		mxkeys[i] = C.CString(i.Value())
 	}
 
 	var ascv *C.AtomicSymbolCreator
 	var ascn C.uint
 
-	if e := C.MXSymbolListAtomicSymbolCreators(&ascn,&ascv); e != 0 {
+	if e := C.MXSymbolListAtomicSymbolCreators(&ascn, &ascv); e != 0 {
 		panic("failed to gather symbols from mxnet")
 	}
 
 	m := map[string]MxnetOp{}
-	for op := OpEmpty+1; op<OpNoOp; op++ {
+	for op := OpEmpty + 1; op < OpNoOp; op++ {
 		m[op.Value()] = op
 	}
 
-	for i:=uintptr(0); i<uintptr(ascn); i++ {
-		a := *(*C.AtomicSymbolCreator)(unsafe.Pointer(uintptr(unsafe.Pointer(ascv))+i*unsafe.Sizeof(*ascv)))
+	for i := uintptr(0); i < uintptr(ascn); i++ {
+		a := *(*C.AtomicSymbolCreator)(unsafe.Pointer(uintptr(unsafe.Pointer(ascv)) + i*unsafe.Sizeof(*ascv)))
 		var n *C.char
-		if e:= C.MXSymbolGetAtomicSymbolName(a,&n); e != 0 {
-			panic(fmt.Sprintf("failed to gather name for symbol %x",a))
+		if e := C.MXSymbolGetAtomicSymbolName(a, &n); e != 0 {
+			panic(fmt.Sprintf("failed to gather name for symbol %x", a))
 		}
 		if ent, ok := m[C.GoString(n)]; ok {
 			mxentry[ent] = a
-			fmt.Println(C.GoString(n),a)
+			fmt.Println(C.GoString(n), a)
 		}
 	}
 }
 
 const maxArgsCount = 16
+
 func fillargs(keys []*C.char, vals []*C.char, ap []interface{}) int {
 	i := 0
 	for len(ap) != 0 && i < maxArgsCount/2 {
@@ -74,16 +74,16 @@ func fillargs(keys []*C.char, vals []*C.char, ap []interface{}) int {
 	return i
 }
 
-func ImperativeInvokeInplace1(op MxnetOp, h NDArrayHandle, a... interface{}) error {
+func ImperativeInvokeInplace1(op MxnetOp, h NDArrayHandle, a ...interface{}) error {
 	if h == nil {
 		return fmt.Errorf("uninitialized or broken array")
 	}
 
 	var keys [maxArgsCount]*C.char
 	var vals [maxArgsCount]*C.char
-	ano := C.int(fillargs(keys[:],vals[:],a))
+	ano := C.int(fillargs(keys[:], vals[:], a))
 	if ent := mxentry[op]; ent != nil {
-		if e := C.imperative_invoke_out1(ent,C.NDArrayHandle(h),ano,&keys[0],&vals[0]); e != 0 {
+		if e := C.imperative_invoke_out1(ent, C.NDArrayHandle(h), ano, &keys[0], &vals[0]); e != 0 {
 			return fmt.Errorf("maxnet api error: %v", op.Value())
 		}
 	} else {
