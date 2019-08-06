@@ -21,12 +21,17 @@ import (
 )
 
 var GpuCount int = 0
+var LibVersion = 0
 var mxkeys [KeyNoKey]*C.char
 var mxentry [OpNoOp]C.AtomicSymbolCreator
 
 type NDArrayHandle C.NDArrayHandle
 
 func init() {
+
+	var v C.int
+	C.MXGetVersion(&v)
+	LibVersion = int(v)
 
 	var c C.int
 	C.MXGetGPUCount(&c)
@@ -135,3 +140,4 @@ func ReleaseNDArrayHandle(handle NDArrayHandle) {
 		C.MXNDArrayFree(C.NDArrayHandle(handle))
 	}
 }
+

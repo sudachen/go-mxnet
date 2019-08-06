@@ -14,7 +14,7 @@ type NDArray struct {
 	err    error
 }
 
-func release(a *NDArray) { internal.ReleaseNDArrayHandle(a.handle) }
+func release(a *NDArray) { if a!= nil { internal.ReleaseNDArrayHandle(a.handle) } }
 
 // idiomatic finalizer
 func (a *NDArray) Close() error {
@@ -31,7 +31,7 @@ func (a NDArray) Err() error {
 }
 
 func Array(tp Dtype, d Dimension) *NDArray {
-	return Cpu().Array(tp, d)
+	return CPU.Array(tp, d)
 }
 
 func Errayf(s string, a ...interface{}) *NDArray {
@@ -85,6 +85,12 @@ func (v Variant) Float32() float32 {
 	case float64:
 		return float32(x)
 	case int64:
+		return float32(x)
+	case int32:
+		return float32(x)
+	case int8:
+		return float32(x)
+	case uint8:
 		return float32(x)
 	}
 	return 0

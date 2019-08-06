@@ -8,8 +8,8 @@ jobs: # basic units of work in a run
     parallelism: 1
 
     environment: # environment variables for the build itself
-      OMP_NUM_THREADS: 4
-      MXNET_CPU_WORKER_NTHREADS: 2
+      #OMP_NUM_THREADS: 4
+      #MXNET_CPU_WORKER_NTHREADS: 2
       CC_TEST_REPORTER_ID: 8d2e3df7f0a2808d79cd3b91bb236f8180af441d4244c9cca091b2307931580e
 
     steps: # steps that comprise the `build` job
